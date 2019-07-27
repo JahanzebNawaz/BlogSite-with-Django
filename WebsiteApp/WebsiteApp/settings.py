@@ -51,12 +51,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'WebsiteApp.urls'
-TEMPLATES_DIR = 'blog/tempaltes/blog'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_DIR,],
+        'DIRS': [os.path.join(BASE_DIR, 'tempaltes')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
