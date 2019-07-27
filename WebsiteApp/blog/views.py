@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -49,3 +49,17 @@ class DraftListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Post.objects.filter(published_date_isnull = True).order_by('created_date')
+
+@login_required
+def add_comment_to_post(request, pk ):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method =='POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            commet = form.save(commit= False)
+            commet.post = post
+            commet.save()
+            return redirect('post_details', pk=post.pk)
+    else:
+        form = CommentForm()
+    return render(request, 'blog/comment_form.html', {'form': form})
