@@ -27,7 +27,7 @@ class PostDetailView(DetailView):
 
 class CreatePostView(LoginRequiredMixin ,CreateView):
     login_url = '/login/'
-    redirect_field_name = 'blog/post_detail.html'
+    redirect_field_name = 'post_detail.html'
     form_class = PostForm
     model = Post
 
@@ -48,7 +48,7 @@ class DraftListView(LoginRequiredMixin, ListView):
 
 
     def get_queryset(self):
-        return Post.objects.filter(published_date_isnull = True).order_by('created_date')
+        return Post.objects.filter(published_date__isnull = True).order_by('created_date')
 
 
 # =====================================
