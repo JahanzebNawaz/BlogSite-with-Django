@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +6,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Django Blog Website</title>
+    <link rel="stylesheet" href="{% static '/dist/css/bootstrap.min.css' %}" type="stylesheet">
 </head>
 <body>
+    <header>
+        <nav class="navbar navbar-default bg-dark">
+            <div class="container">
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'about' %}">About</a></li>
+                    <li><a href="#">Google</a></li>
+                    <li><a href="#">FAcebook</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                        <li>
+                            <a href="{% url 'post_new' %}">New Post</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'post_draft_list' %}">Draft</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'logout' %}">Logout</a>
+                        </li>
+                        <li>
+                            <a href="">Welcome: {{user.username}}</a>
+                        </li>
+                        {%  else  %}
+                        <li><a href="{% url 'login' %}" class="nav navbar-right">User Icon</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- CONTENT BLOCK -->
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="blog_post">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
     
 </body>
 </html>

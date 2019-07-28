@@ -1,0 +1,18 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div class="mx-auto">
+        {% for post in psot_list %}
+            <div class="card">
+                
+                <div class="card-body">
+                    <h1><a href="{% url 'post_detail' pk=post.pk %}"> {{post.title}} </a></h1>
+                    <p> Published on: {{post.published|date:"D M Y"}} </p>
+                </div>
+                <div clas="card-footer">
+                    <a href="{% url 'post_detail' pk=post.pk %}" >Comments:  {{ post.approve_comments.count   }}</a> 
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
